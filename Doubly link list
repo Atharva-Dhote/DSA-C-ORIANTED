@@ -1,0 +1,113 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+
+struct Node {
+	int data;
+	struct Node *prev;
+	struct Node *next;
+};
+struct Node *start = NULL;
+struct Node *end = NULL;
+
+void insert_dll();
+void delete_dll();
+void display_dll();
+
+int main() {
+    int ch;
+    printf("\nName:-Atharva Dhote");
+    printf("\nRoll No:-31");
+    while (1) 
+    {
+         
+        printf("\n-----Doubly Linked List Operations----");
+        printf("\n1. Insert in Doubly linked list");
+        printf("\n2. Delete from Doubly linked list");
+        printf("\n3. Display Doubly linked list");
+        printf("\n4. EXIT");
+        printf("\nEnter your choice: ");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1:
+                insert_dll();
+                break;
+            case 2:
+                delete_dll();
+                break;
+            case 3:
+                display_dll();
+                break;
+            case 4:
+                exit(0);
+                break;
+            default:
+                printf("\nINVALID CHOICE");
+        }
+    }
+    return 0;
+}
+
+
+void insert_dll() 
+{
+    struct Node *p = (struct Node*)malloc(sizeof(struct Node)); 
+    printf("\nEnter any Data: ");
+    scanf("%d", &p->data);
+    p->prev = NULL;
+    p->next = NULL;
+    if (start == NULL)
+    {
+        start = p;
+        end = p;
+    } 
+    else
+    {
+        end->next = p;
+        p->prev = end;
+        end = p;
+    }
+}
+
+void delete_dll() 
+{
+    if (start == NULL)
+    {
+        printf("\nEmpty Doubly Linked List");
+    }
+    else
+    {
+        struct Node *temp = end; 
+        if (start == end)
+        {
+            printf("\n%d", temp->data);
+            free(temp); 
+            start = NULL;
+            end = NULL;
+        }
+        else
+        {
+            end = end->prev;
+            end->next = NULL;
+            printf("\n%d", temp->data);
+            free(temp); 
+        }
+    }
+}
+
+
+void display_dll() 
+{
+    if (start == NULL) 
+    {
+        printf("\nEmpty Doubly Linked List");
+    } 
+    else 
+    {
+        struct Node *ptr = start;
+        while (ptr != NULL) {
+            printf("\t%d", ptr->data);
+            ptr = ptr->next;
+        }
+    }
+}
