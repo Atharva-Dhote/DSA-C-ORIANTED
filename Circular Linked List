@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* link;
+};
+
+struct node *start = NULL; // Initialize start pointer globally
+
+void insert_cll();
+void delete_cll();
+void display_cll();
+
+int main() {
+    int ch;
+    while (1) {
+        printf("\n1. Insert in Circular Linked List\n");
+        printf("2. Delete from Circular Linked List\n");
+        printf("3. Display Circular Linked List\n");
+        printf("4. EXIT\n");
+        printf("\nEnter your Choice\n");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1:
+                insert_cll();
+                break;
+            case 2:
+                delete_cll();
+                break;
+            case 3:
+                display_cll();
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("\nWRONG CHOICE\n");
+        }
+    }
+}
+
+void insert_cll() {
+    struct node *p = malloc(sizeof(struct node));
+    printf("\nEnter Data: ");
+    scanf("%d", &p->data);
+    if (start == NULL) {
+        start = p;
+        p->link = start;
+    } else {
+        struct node *temp = start;
+        while (temp->link != start)
+            temp = temp->link;
+        temp->link = p;
+        p->link = start;
+    }
+}
+
+void delete_cll() {
+    if (start == NULL) {
+        printf("\nList is Empty\n");
+    } else {
+        struct node *temp = start;
+        while (temp->link != start)
+            temp = temp->link;
+        if (temp == start) { // If there's only one node
+            printf("\nDeleted: %d\n", start->data);
+            free(start);
+            start = NULL;
+        } else {
+            temp->link = start->link;
+            printf("\nDeleted: %d\n", start->data);
+            free(start);
+            start = temp->link;
+        }
+    }
+}
+
+void display_cll() {
+    if (start == NULL) {
+        printf("\nList is Empty\n");
+    } else {
+        struct node *temp = start;
+        do {
+            printf("\t%d", temp->data);
+            temp = temp->link;
+        } while (temp != start);
+        printf("\n");
+    }
+}
