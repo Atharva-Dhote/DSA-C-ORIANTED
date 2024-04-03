@@ -1,0 +1,106 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+
+struct Node {
+	int data;
+	struct Node *link;
+};
+struct Node *start = NULL;
+
+void insert_cll();
+void delete_cll();
+void display_cll();
+
+int main() {
+    int ch;
+        printf("\nName:-Atharva Dhote");
+        printf("\nRoll No:-31");
+    while (1) 
+    {
+        printf("\n-----Circular Linked List Operations----");
+        printf("\n1. Insert in Circular linked list");
+        printf("\n2. Delete from Circular linked list");
+        printf("\n3. Display Circular linked list");
+        printf("\n4. EXIT");
+        printf("\nEnter your choice: ");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1:
+                insert_cll();
+                break;
+            case 2:
+                delete_cll();
+                break;
+            case 3:
+                display_cll();
+                break;
+            case 4:
+                exit(0);
+                break;
+            default:
+                printf("\nINVALID CHOICE");
+        }
+    }
+    return 0; 
+}
+
+
+void insert_cll()
+{
+    struct Node *p = (struct Node*)malloc(sizeof(struct Node));
+    printf("\nEnter any Data: ");
+    scanf("%d", &p->data);
+    if (start == NULL)
+    {
+        start = p;
+        p->link = start;
+    } 
+    else 
+    {
+        p->link = start->link;
+        start->link = p;
+        start = p;
+    }
+}
+
+void delete_cll()
+{
+    if (start == NULL) 
+    {
+        printf("\nEmpty Circular List");
+    } 
+    else
+    {
+        struct Node *temp = start->link; 
+        if (start->link == start) 
+        {
+            printf("\n%d", temp->data);
+            free(temp); 
+            start = NULL; 
+        } 
+        else 
+        {
+            start->link = temp->link;
+            printf("\n%d", temp->data);
+            free(temp);
+        }
+    }
+}
+
+void display_cll()
+{
+    if (start == NULL)
+    {
+        printf("\nEmpty Circular List");
+    } 
+    else
+    {
+        struct Node *ptr = start->link; 
+        do 
+        {
+            printf("\t%d", ptr->data);
+            ptr = ptr->link;
+        } while (ptr != start->link); 
+    }
+}
